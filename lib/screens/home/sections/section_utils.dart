@@ -1,5 +1,7 @@
 import 'package:arrahman_portfolio/all_imports.dart';
 
+import '../project/auto_view.dart';
+
 class Section {
   final GlobalKey key;
   final String title;

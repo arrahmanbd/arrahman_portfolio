@@ -1,8 +1,9 @@
 import 'package:arrahman_portfolio/all_imports.dart';
+import 'package:arrahman_portfolio/screens/home/gitrepo/files.dart';
 
 class ProjectDetails extends StatefulWidget {
-  final ProjectModel data;
-  const ProjectDetails({Key? key, required this.data}) : super(key: key);
+  final GithubRepository proj;
+  const ProjectDetails({Key? key, required this.proj}) : super(key: key);
 
   @override
   State<ProjectDetails> createState() => _ProjectDetailsState();
@@ -24,7 +25,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextBuilder(
-                    text: widget.data.title,
+                    text: widget.proj.name,
                     color: kBlack,
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
@@ -50,7 +51,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
               ),
               const SizedBox(height: 20.0),
               TextBuilder(
-                text: widget.data.description,
+                text: widget.proj.description,
                 color: kBlack,
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -63,36 +64,36 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 crossAxisAlignment: WrapCrossAlignment.end,
                 runAlignment: WrapAlignment.spaceBetween,
                 children: [
-                  if (widget.data.playStore.isNotEmpty)
+                  if (widget.proj.created.isNotEmpty)
                     ActionButton(
                       buttonType: ButtonType.playStore,
                       buttonShape: ButtonShape.rect,
                       onTap: () {
-                        UrlLaunch.launchInBrowser(url: widget.data.playStore);
+                        UrlLaunch.launchInBrowser(url: widget.proj.url);
                       },
                     ),
-                  if (widget.data.miStore.isNotEmpty)
-                    ActionButton(
-                      buttonType: ButtonType.miStore,
-                      buttonShape: ButtonShape.rect,
-                      onTap: () {
-                        UrlLaunch.launchInBrowser(url: widget.data.miStore);
-                      },
-                    ),
-                  if (widget.data.gitHub.isNotEmpty)
-                    ActionButton(
-                      buttonType: ButtonType.github,
-                      buttonShape: ButtonShape.circle,
-                      onTap: () {
-                        UrlLaunch.launchInBrowser(url: widget.data.gitHub);
-                      },
-                    ),
-                  if (widget.data.website.isNotEmpty)
+                  // if (widget.data.miStore.isNotEmpty)
+                  //   ActionButton(
+                  //     buttonType: ButtonType.miStore,
+                  //     buttonShape: ButtonShape.rect,
+                  //     onTap: () {
+                  //       UrlLaunch.launchInBrowser(url: widget.data.miStore);
+                  //     },
+                  //   ),
+                  // if (widget.data.gitHub.isNotEmpty)
+                  //   ActionButton(
+                  //     buttonType: ButtonType.github,
+                  //     buttonShape: ButtonShape.circle,
+                  //     onTap: () {
+                  //       UrlLaunch.launchInBrowser(url: widget.data.gitHub);
+                  //     },
+                  //   ),
+                  if (widget.proj.created.isNotEmpty)
                     ActionButton(
                       buttonType: ButtonType.website,
                       buttonShape: ButtonShape.circle,
                       onTap: () {
-                        UrlLaunch.launchInBrowser(url: widget.data.website);
+                        UrlLaunch.launchInBrowser(url: widget.proj.url);
                       },
                     ),
                 ],
@@ -105,10 +106,10 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 fontWeight: FontWeight.w500,
               ),
               const SizedBox(height: 20.0),
-              widget.data.demo.isNotEmpty
+              widget.proj.description.isNotEmpty
                   ? GestureDetector(
                       onTap: () {
-                        UrlLaunch.launchInBrowser(url: widget.data.demo);
+                        UrlLaunch.launchInBrowser(url: widget.proj.url);
                       },
                       child: const TextBuilder(
                         text: 'Click Here',
@@ -133,15 +134,16 @@ class _ProjectDetailsState extends State<ProjectDetails> {
               const SizedBox(height: 20.0),
               SizedBox(
                 height: 300,
-                child: widget.data.screenshot.isNotEmpty
+                child: widget.proj.description.isNotEmpty
                     ? RawScrollbar(
                         thumbColor: Colors.black45,
                         trackVisibility: true,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
                         thickness: 10,
                         controller: _scrollController,
                         child: ListView.builder(
-                          itemCount: widget.data.screenshot.length,
+                          itemCount: 4,
                           shrinkWrap: true,
                           physics: const ScrollPhysics(),
                           scrollDirection: Axis.horizontal,
@@ -151,17 +153,23 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                               padding: const EdgeInsets.only(right: 10),
                               child: GestureDetector(
                                 onTap: () {
-                                  showImagePreview(context: context, image: widget.data.screenshot[i]);
+                                  showImagePreview(
+                                      context: context, image: widget.proj.url);
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: CachedNetworkImage(
-                                    imageUrl: widget.data.screenshot[i],
+                                    imageUrl: widget.proj.url,
                                     fit: BoxFit.cover,
                                     height: 600,
-                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                        Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                    progressIndicatorBuilder: (context, url,
+                                            downloadProgress) =>
+                                        Center(
+                                            child: CircularProgressIndicator(
+                                                value:
+                                                    downloadProgress.progress)),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
                               ),

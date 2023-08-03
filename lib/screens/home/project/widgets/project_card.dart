@@ -1,14 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:arrahman_portfolio/all_imports.dart';
+import 'package:arrahman_portfolio/screens/home/gitrepo/files.dart';
 
 class ProjectCard extends StatelessWidget {
   final Function() onTap;
-  final ProjectModel? project;
+  final String name;
+  final String description;
+  final String link;
   final bool? top;
+  final String time;
   const ProjectCard({
     Key? key,
-    this.top,
-    this.project,
     required this.onTap,
+    required this.name,
+    required this.description,
+    required this.link,
+    this.top,
+    required this.time,
   }) : super(key: key);
 
   @override
@@ -23,23 +31,33 @@ class ProjectCard extends StatelessWidget {
               color: kWhite,
               margin: EdgeInsets.zero,
               elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
-                padding: EdgeInsets.all(Responsive.isDesktop(context) ? 25.0 : 15),
+                padding:
+                    EdgeInsets.all(Responsive.isDesktop(context) ? 25.0 : 15),
                 child: SizedBox(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextBuilder(
-                        text: project!.title,
+                        text: name,
                         color: kBlack,
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
                       ),
                       const SizedBox(height: 30.0),
                       TextBuilder(
-                        text: project!.description,
+                        text: description,
+                        color: kBlack,
+                        height: 1.5,
+                        maxLines: 5,
+                        textOverflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 30.0),
+                      TextBuilder(
+                        text: time,
                         color: kBlack,
                         height: 1.5,
                         maxLines: 5,
@@ -62,28 +80,30 @@ class ProjectCard extends StatelessWidget {
           Positioned(
             right: 5,
             top: 10,
-            child: top==true? const SizedBox(
-              width: 72,
-              child: Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.star,
-                        size: 18,
-                        color: Colors.orange,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.star,
-                        size: 18,
-                        color: Colors.orange,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.starHalfStroke,
-                        size: 18,
-                        color: Colors.orange,
-                  ),
-                ],
-              ),
-            ):SizedBox(),
+            child: top == true
+                ? const SizedBox(
+                    width: 72,
+                    child: Row(
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.star,
+                          size: 18,
+                          color: Colors.orange,
+                        ),
+                        FaIcon(
+                          FontAwesomeIcons.star,
+                          size: 18,
+                          color: Colors.orange,
+                        ),
+                        FaIcon(
+                          FontAwesomeIcons.starHalfStroke,
+                          size: 18,
+                          color: Colors.orange,
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox(),
             // Container(
             //   height: 50,
             //   width: 50,
